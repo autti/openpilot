@@ -29,5 +29,6 @@ setup(
         'pycapnp',
         'raven',
         'setproctitle',
+        'libusb1',
     ]
 )

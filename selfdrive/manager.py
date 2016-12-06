@@ -7,7 +7,7 @@ import importlib
 import subprocess
 import signal
 import traceback
-#import usb1
+import usb1
 import zmq
 
 from multiprocessing import Process
@@ -271,7 +271,6 @@ def manager_test():
   time.sleep(10)
 
 def wait_for_device():
-  return
 
   while 1:
     try:

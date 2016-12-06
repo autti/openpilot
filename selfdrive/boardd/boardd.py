@@ -8,12 +8,8 @@ from common.realtime import Ratekeeper
 from common.services import service_list
 from selfdrive.swaglog import cloudlog
 
-# USB is optional
-try:
-  import usb1
-  from usb1 import USBErrorIO, USBErrorOverflow
-except Exception:
-  pass
+import usb1
+from usb1 import USBErrorIO, USBErrorOverflow
 
 # TODO: rewrite in C to save CPU
 

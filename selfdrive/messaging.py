@@ -1,7 +1,7 @@
 import zmq
 
 from cereal import log
-from common import realtime
+from openpilot.common import realtime
 
 def new_message():
   dat = log.Event.new_message()

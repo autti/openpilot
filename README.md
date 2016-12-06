@@ -52,6 +52,16 @@ Directory structure
 
 To understand how the services interact, see `common/services.py`
 
+Developing
+------
+
+openpilot does not (yet) work as an installable python package and relies on it's root folder being the python home.
+
+```
+   pip install -e .
+   python -m openpilot.selfdrive.manager
+```
+
 Adding Car Support
 ------
 

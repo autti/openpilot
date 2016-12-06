@@ -3,7 +3,7 @@ import json
 import subprocess
 
 from selfdrive.swaglog import cloudlog
-from common.api import api_get
+from openpilot.common.api import api_get
 
 DONGLEAUTH_PATH = "/sdcard/dongleauth"
 
@@ -35,4 +35,4 @@ def register():
 
 if __name__ == "__main__":
   print api_get("").text
-  print register()
+  #print register()

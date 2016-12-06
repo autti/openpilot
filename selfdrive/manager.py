@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import os
 import sys
 import time
@@ -6,35 +7,46 @@ import importlib
 import subprocess
 import signal
 import traceback
-import usb1
-from multiprocessing import Process
-from common.services import service_list
-
+#import usb1
 import zmq
 
+from multiprocessing import Process
 from setproctitle import setproctitle
 
-from selfdrive.swaglog import cloudlog
+from openpilot.common.services import service_list
+from openpilot.common import crash
+
 import selfdrive.messaging as messaging
 from selfdrive.thermal import read_thermal
 from selfdrive.registration import register
+from selfdrive.swaglog import cloudlog
 
-import common.crash
+# Daemons usually start as python modules and  graduate
+# to become c++ services, like what happened with boardd.
+# In order to support a seamless transition and let end users
+# override the services now all deamons read from an environment variable.
+# The possible values are:
+# 1. A fully qualified python module, like 'selfdrive.controls.radard'.
+# 2. A path to an executable, like '/data/openpilot/visiond'.
+#       * If the module is not build, this application will try to build it
+#         from a Makefile in the parent folder.
+# 3. An empty string, which disables the module.
+#
+# Any value that does not satisfy any of the conditions above will trigger an Exception
+#   and abort execution.
 
-# comment out anything you don't want to run
 managed_processes = {
-  "uploader": "selfdrive.loggerd.uploader",
-  "controlsd": "selfdrive.controls.controlsd",
-  "radard": "selfdrive.controls.radard",
-  "calibrationd": "selfdrive.calibrationd.calibrationd",
-  "loggerd": "selfdrive.loggerd.loggerd",
-  "logmessaged": "selfdrive.logmessaged",
-  #"boardd": "selfdrive.boardd.boardd",
-  "logcatd": ("logcatd", ["./logcatd"]),
-  "boardd": ("boardd", ["./boardd"]),   # switch to c++ boardd
-  "ui": ("ui", ["./ui"]),
-  "visiond": ("visiond", ["./visiond"]),
-  "sensord": ("sensord", ["./sensord"]), }
+  "uploader": os.getenv("OPENPILOT_UPLOADERD", "selfdrive.loggerd.uploader"),
+  "controlsd": os.getenv("OPENPILOT_CONTROLSD", "selfdrive.controls.controlsd"),
+  "radard": os.getenv("OPENPILOT_RADARD", "selfdrive.controls.radard"),
+  "calibrationd": os.getenv("OPENPILOT_CALIBRATIOND", "selfdrive.calibrationd.calibrationd"),
+  "loggerd": os.getenv("OPENPILOT_LOGGERD", "selfdrive.loggerd.loggerd"),
+  "logmessaged": os.getenv("OPENPILOT_LOGMESSAGED", "selfdrive.logmessaged"),
+  "logcatd": os.getenv("OPENPILOT_LOGCATD", "./logcatd"),
+  "boardd": os.getenv("OPENPILOT_BOARDD", "./boardd"),
+  "ui": os.getenv("OPENPILOT_UI", "./ui"),
+  "visiond": os.getenv("OPENPILOT_VISIOND", "./visiond"),
+  "sensord": os.getenv("OPENPILOT_SENSORD", "./sensord"), }
 
 running = {}
 
@@ -57,9 +69,9 @@ def launcher(proc, gctx):
     # exec the process
     mod.main(gctx)
   except Exception:
-    # can't install the crash handler becuase sys.excepthook doesn't play nice
+    # can't install the crash handler because sys.excepthook doesn't play nice
     # with threads, so catch it here.
-    common.crash.capture_exception()
+    crash.capture_exception()
     raise
 
 def nativelauncher(pargs, cwd):
@@ -113,18 +125,18 @@ def cleanup_all_processes(signal, frame):
 def manager_init():
   global gctx
 
-  reg_res = register()
-  if reg_res:
-    dongle_id, dongle_secret = reg_res
-  else:
-    raise Exception("server registration failed")
+  #reg_res = register()
+  #if reg_res:
+  #  dongle_id, dongle_secret = reg_res
+  #else:
+  #  raise Exception("server registration failed")
 
   # set dongle id
-  cloudlog.info("dongle id is " + dongle_id)
-  os.environ['DONGLE_ID'] = dongle_id
-  os.environ['DONGLE_SECRET'] = dongle_secret
+  #cloudlog.info("dongle id is " + dongle_id)
+  #os.environ['DONGLE_ID'] = dongle_id
+  #os.environ['DONGLE_SECRET'] = dongle_secret
 
-  cloudlog.bind_global(dongle_id=dongle_id)
+  #cloudlog.bind_global(dongle_id=dongle_id)
 
   # set gctx
   gctx = {
@@ -204,20 +216,41 @@ def manager_thread():
 def manager_prepare():
   for p in managed_processes:
     proc = managed_processes[p]
+
+    if len(proc) == 0:
+      cloudlog.info("no loading %s" % p)
+      continue
+
     if isinstance(proc, basestring):
-      # import this python
-      cloudlog.info("preimporting %s" % proc)
-      importlib.import_module(proc)
-    else:
+      try:
+        importlib.import_module(proc)
+        cloudlog.info("preimported %s" % proc)
+      except TypeError,e :
+        # This error is thrown when importlib thinks it is handling a relative import
+        # but there is no package name argument.
+        cloudlog.error("Could not import %s: %s" % (proc, str(e)))
+      except ImportError, e:
+        # This error is throw when it is a filename or the library does not exist.
+        cloudlog.error("Could not import %s: %s" % (proc, str(e)))
+      else:
+        continue
+
+    if os.path.exists(proc):
       # build this process
       cloudlog.info("building %s" % (proc,))
       try:
-        subprocess.check_call(["make", "-j4"], cwd=proc[0])
+        subprocess.check_call(["make", "-j4"], cwd=proc)
       except subprocess.CalledProcessError:
         # make clean if the build failed
         cloudlog.info("building %s failed, make clean" % (proc, ))
-        subprocess.check_call(["make", "clean"], cwd=proc[0])
-        subprocess.check_call(["make", "-j4"], cwd=proc[0])
+        subprocess.check_call(["make", "clean"], cwd=proc)
+        subprocess.check_call(["make", "-j4"], cwd=proc)
+      else:
+        continue
+
+    # If we reach this point, let's raise an exception to warn the user.
+    raise Exception('Invalid daemon configuration for %s: %s' % (p, proc))
+
 
 def manager_test():
   global managed_processes
@@ -238,6 +271,8 @@ def manager_test():
   time.sleep(10)
 
 def wait_for_device():
+  return
+
   while 1:
     try:
       context = usb1.USBContext()
@@ -270,7 +305,7 @@ def main():
       manager_thread()
     except Exception:
       traceback.print_exc()
-      common.crash.capture_exception()
+      crash.capture_exception()
     finally:
       cleanup_all_processes(None, None)
 

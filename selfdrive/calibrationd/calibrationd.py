@@ -3,7 +3,7 @@ import os
 import numpy as np
 import zmq
 
-from common.services import service_list
+from openpilot.common.services import service_list
 import selfdrive.messaging as messaging
 from selfdrive.config import ImageParams, VehicleParams
 from selfdrive.calibrationd.calibration import ViewCalibrator, CalibStatus

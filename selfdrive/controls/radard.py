@@ -14,9 +14,9 @@ from selfdrive.controls.lib.pathplanner import PathPlanner
 from selfdrive.config import VehicleParams
 from selfdrive.controls.lib.radar_helpers import Track, Cluster, fcluster, RDR_TO_LDR
 
-from common.services import service_list
-from common.realtime import sec_since_boot, set_realtime_priority, Ratekeeper
-from common.kalman.ekf import EKF, SimpleSensor
+from openpilot.common.services import service_list
+from openpilot.common.realtime import sec_since_boot, set_realtime_priority, Ratekeeper
+from openpilot.common.kalman.ekf import EKF, SimpleSensor
 
 #vision point
 DIMSV = 2

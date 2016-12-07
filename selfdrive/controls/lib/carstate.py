@@ -5,7 +5,7 @@ from selfdrive.boardd.boardd import can_capnp_to_can_list_old, can_capnp_to_can_
 from selfdrive.controls.lib.can_parser import CANParser
 from selfdrive.controls.lib.fingerprints import fingerprints
 from selfdrive.config import VehicleParams
-from common.realtime import sec_since_boot
+from openpilot.common.realtime import sec_since_boot
 
 
 def get_can_parser(civic, brake_only):

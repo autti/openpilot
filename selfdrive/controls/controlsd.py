@@ -2,8 +2,8 @@
 import zmq
 import numpy as np
 
-from common.services import service_list
-from common.realtime import sec_since_boot, set_realtime_priority, Ratekeeper
+from openpilot.common.services import service_list
+from openpilot.common.realtime import sec_since_boot, set_realtime_priority, Ratekeeper
 
 from selfdrive.config import CruiseButtons
 from selfdrive.config import Conversions as CV

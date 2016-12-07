@@ -4,8 +4,8 @@ import struct
 import zmq
 
 import selfdrive.messaging as messaging
-from common.realtime import Ratekeeper
-from common.services import service_list
+from openpilot.common.realtime import Ratekeeper
+from openpilot.common.services import service_list
 from selfdrive.swaglog import cloudlog
 
 import usb1

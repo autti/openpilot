@@ -218,7 +218,7 @@ def manager_prepare():
     proc = managed_processes[p]
 
     if len(proc) == 0:
-      cloudlog.info("no loading %s" % p)
+      cloudlog.info("not loading %s" % p)
       continue
 
     if isinstance(proc, basestring):

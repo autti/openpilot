@@ -1,8 +1,8 @@
 from collections import namedtuple
 
-import common.numpy_fast as np
+import openpilot.common.numpy_fast as np
 import selfdrive.controls.lib.hondacan as hondacan
-from common.realtime import sec_since_boot
+from openpilot.common.realtime import sec_since_boot
 from selfdrive.config import CruiseButtons
 from selfdrive.boardd.boardd import can_list_to_can_capnp
 from selfdrive.controls.lib.alert_database import process_hud_alert

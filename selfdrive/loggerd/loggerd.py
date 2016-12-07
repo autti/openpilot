@@ -3,8 +3,8 @@ import os
 import json
 import zmq
 
-import common.realtime as realtime
-from common.services import service_list
+import openpilot.common.realtime as realtime
+from openpilot.common.services import service_list
 from selfdrive.swaglog import cloudlog
 import selfdrive.messaging as messaging
 

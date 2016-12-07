@@ -12,7 +12,7 @@ import threading
 from selfdrive.swaglog import cloudlog
 from selfdrive.loggerd.config import DONGLE_ID, DONGLE_SECRET, ROOT
 
-from common.api import api_get
+from openpilot.common.api import api_get
 
 def raise_on_thread(t, exctype):
   for ctid, tobj in threading._active.items():

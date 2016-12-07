@@ -3,8 +3,8 @@ import dbcs
 from collections import defaultdict
 
 from selfdrive.controls.lib.hondacan import fix
-from common.realtime import sec_since_boot
-from common.dbc import dbc
+from openpilot.common.realtime import sec_since_boot
+from openpilot.common.dbc import dbc
 
 class CANParser(object):
   def __init__(self, dbc_f, signals, checks=[]):

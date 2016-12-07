@@ -3,7 +3,7 @@ import platform
 import os
 import sys
 
-from common.kalman.ekf import FastEKF1D, SimpleSensor
+from openpilot.common.kalman.ekf import FastEKF1D, SimpleSensor
 
 # radar tracks
 SPEED, ACCEL = 0, 1   # Kalman filter states enum

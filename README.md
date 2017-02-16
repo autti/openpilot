@@ -97,6 +97,18 @@ Kvaser and canlib
 
 In order to use the #abraham branch you need a Kvaser Leaf Light HS v2 and to configure canlib on python.
 
+```sh
+$ cd ~
+$ wget http://www.kvaser.com/software/7330130980754/V5_18_0/linuxcan.tar.gz
+$ tar xf linuxcan.tar.gz
+$ cd linuxcan
+$ make
+$ sudo make install
+
+$ wget http://www.kvaser.com/software/7330130981911/V1_1_23/canlib-1.1.23.zip
+$ pip install canlib-1.1.23.zip
+ ```
+
 Licensing
 ------
 

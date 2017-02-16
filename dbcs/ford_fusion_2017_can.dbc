@@ -1,0 +1,124 @@
+VERSION ""
+
+
+NS_ : 
+	NS_DESC_
+	CM_
+	BA_DEF_
+	BA_
+	VAL_
+	CAT_DEF_
+	CAT_
+	FILTER
+	BA_DEF_DEF_
+	EV_DATA_
+	ENVVAR_DATA_
+	SGTYPE_
+	SGTYPE_VAL_
+	BA_DEF_SGTYPE_
+	BA_SGTYPE_
+	SIG_TYPE_REF_
+	VAL_TABLE_
+	SIG_GROUP_
+	SIG_VALTYPE_
+	SIGTYPE_VALTYPE_
+	BO_TX_BU_
+	BA_DEF_REL_
+	BA_REL_
+	BA_DEF_DEF_REL_
+	BU_SG_REL_
+	BU_EV_REL_
+	BU_BO_REL_
+	SG_MUL_VAL_
+
+BS_:
+
+BU_: PDSC PDS_HMI PDS_Slave PDS_Master EPAS TPEC MAB BPEC
+VAL_TABLE_ aaaaaaaaaa 3 "EPAS" 2 "TPEC" 1 "BPEC" ;
+
+BO_ 947 Misc_Report: 5 EPAS
+ SG_ CNCL : 14|1@1+ (1,0) [0|0] ""  MAB
+ SG_ RES : 13|1@1+ (1,0) [0|0] ""  MAB
+ SG_ ON : 11|1@1+ (1,0) [0|0] ""  MAB
+ SG_ OFF : 12|1@1+ (1,0) [0|0] ""  MAB
+ SG_ BELTP : 33|1@1+ (1,0) [0|0] ""  MAB
+ SG_ BELTD : 32|1@1+ (1,0) [0|0] ""  MAB
+ SG_ PABAG : 31|1@1+ (1,0) [0|0] ""  MAB
+ SG_ PDECT : 30|1@1+ (1,0) [0|0] ""  MAB
+ SG_ TRUNK : 29|1@1+ (1,0) [0|0] ""  MAB
+ SG_ HOOD : 28|1@1+ (1,0) [0|0] ""  MAB
+ SG_ DOORR : 27|1@1+ (1,0) [0|0] ""  MAB
+ SG_ DOORP : 25|1@1+ (1,0) [0|0] ""  MAB
+ SG_ DOORL : 26|1@1+ (1,0) [0|0] ""  MAB
+ SG_ DOORD : 24|1@1+ (1,0) [0|0] ""  MAB
+ SG_ WIPER : 4|4@1+ (1,0) [0|0] ""  MAB
+ SG_ TRNSTAT : 0|2@1+ (1,0) [0|0] ""  MAB
+ SG_ SINC : 18|1@1+ (1,0) [0|0] ""  MAB
+ SG_ SDEC : 19|1@1+ (1,0) [0|0] ""  MAB
+ SG_ ONOFF : 16|1@1+ (1,0) [0|0] ""  MAB
+ SG_ LKAEN : 22|1@1+ (1,0) [0|0] ""  MAB
+ SG_ HIBEAM : 2|2@1+ (1,0) [0|0] ""  MAB
+ SG_ GINC : 20|1@1+ (1,0) [0|0] ""  MAB
+ SG_ GDEC : 21|1@1+ (1,0) [0|0] ""  MAB
+ SG_ FLTBUS : 23|1@1+ (1,0) [0|0] ""  MAB
+ SG_ RESCNCL : 17|1@1+ (1,0) [0|0] ""  MAB
+ SG_ AMBIENT : 8|3@1+ (1,0) [0|0] ""  MAB
+
+BO_ 936 Steering_Report: 8 EPAS
+ SG_ ANGLE : 16|16@1- (0.1,0) [-470|470] "degrees"  MAB
+
+CM_ SG_ 936 ANGLE "Steering Wheel Angle";
+
+CM_ SG_ 947 CNCL "Button Cruise Control CANCEL";
+CM_ SG_ 947 RES "Button Cruise Control RESUME";
+CM_ SG_ 947 ON "Button Cruise Control ON";
+CM_ SG_ 947 OFF "Button Cruise Control OFF";
+CM_ SG_ 947 BELTP "Passenger Seat Belt Buckle";
+CM_ SG_ 947 BELTD "Driver Seat Belt Buckle";
+CM_ SG_ 947 PABAG "Passenger Airbag";
+CM_ SG_ 947 PDECT "Passenger Detect";
+CM_ SG_ 947 TRUNK "Trunk Open";
+CM_ SG_ 947 HOOD "Hood Open";
+CM_ SG_ 947 DOORR "Rear Right Door";
+CM_ SG_ 947 DOORP "Passenger Door";
+CM_ SG_ 947 DOORL "Rear Left Door";
+CM_ SG_ 947 DOORD "Driver Door";
+CM_ SG_ 947 WIPER "Windshield Wiper Status";
+CM_ SG_ 947 TRNSTAT "Turn Signal Status";
+CM_ SG_ 947 SINC "Button ACC SET+";
+CM_ SG_ 947 SDEC "Button ACC SET-";
+CM_ SG_ 947 ONOFF "Button ACC On/Off Toggle";
+CM_ SG_ 947 LKAEN "Button LKA On/Off Toggle";
+CM_ SG_ 947 HIBEAM "High Beam Headlights";
+CM_ SG_ 947 GINC "Button ACC GAP+";
+CM_ SG_ 947 GDEC "Button ACC GAP-";
+CM_ SG_ 947 FLTBUS "Fault CAN Bus (misc)";
+CM_ SG_ 947 RESCNCL "Button ACC Resume/Cancel";
+CM_ SG_ 947 AMBIENT "Ambient Light Level";
+
+VAL_ 947 CNCL 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 RES 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 ON 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 OFF 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 BELTP 1 "Buckled" 0 "Unbuckled" ;
+VAL_ 947 BELTD 1 "Buckled" 0 "Unbuckled" ;
+VAL_ 947 PABAG 1 "Enabled" 0 "Disabled" ;
+VAL_ 947 PDECT 1 "Passenger" 0 "No Passenger" ;
+VAL_ 947 TRUNK 1 "Open" 0 "Closed" ;
+VAL_ 947 HOOD 1 "Open" 0 "Closed" ;
+VAL_ 947 DOORR 1 "Open" 0 "Closed" ;
+VAL_ 947 DOORP 1 "Open" 0 "Closed" ;
+VAL_ 947 DOORL 1 "Open" 0 "Closed" ;
+VAL_ 947 DOORD 1 "Open" 0 "Closed" ;
+VAL_ 947 WIPER 15 "NO_DATA" 14 "STALLED" 13 "RESERVED" 12 "AUTO_ADJUST" 11 "COURTESY_WIPE" 10 "AUTO_HIGH" 9 "AUTO_LOW" 8 "WASH" 7 "MIST_FLICK" 6 "MANUAL_HIGH" 5 "MANUAL_LOW" 4 "MANUAL_ON" 3 "MANUAL_OFF" 2 "OFF_MOVING" 1 "AUTO_OFF" 0 "OFF" ;
+VAL_ 947 TRNSTAT 2 "Right" 1 "Left" 0 "None" ;
+VAL_ 947 SINC 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 SDEC 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 ONOFF 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 LKAEN 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 HIBEAM 2 "HIGH" 1 "FLASH_TO_PASS" 0 "NULL" ;
+VAL_ 947 GINC 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 GDEC 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 FLTBUS 1 "Fault" 0 "No Fault" ;
+VAL_ 947 RESCNCL 1 "Pressed" 0 "Not Pressed" ;
+VAL_ 947 AMBIENT 7 "NO_DATA" 4 "TUNNEL_OFF" 3 "TUNNEL_ON" 2 "TWILIGHT" 1 "LIGHT" 0 "DARK" ;

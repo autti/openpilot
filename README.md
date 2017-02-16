@@ -92,6 +92,11 @@ good places to start.
 
 Want to get paid to work on openpilot? [comma.ai is hiring](http://comma.ai/hiring.html)
 
+Kvaser and canlib
+------
+
+In order to use the #abraham branch you need a Kvaser Leaf Light HS v2 and to configure canlib on python.
+
 Licensing
 ------
 
